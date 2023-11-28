@@ -1,0 +1,59 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main{
+
+    private static final int LOWER_BOUND = 1;
+    private static final int UPPER_BOUND = 100;
+    private static final int MAX_ATTEMPTS = 5;
+
+    public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("******Welcome to the number guessing game!!!!********");
+        System.out.println("We will provided 5 attempts to guess a random number between 1 to 100.");
+        System.out.println("******************ALL THE BEST!!!!**********************");
+
+        int generatedNumber = generateRandomNumber();
+
+        int attempts = 0;
+        boolean guessedCorrectly = false;
+
+        while (attempts < MAX_ATTEMPTS && !guessedCorrectly) {
+            System.out.print("Enter your guessing Number as your wish: ");
+            int userGuess = scanner.nextInt();
+
+            String feedback = compareGuess(userGuess, generatedNumber);
+
+            if (feedback.equals("GREAT JOB!!!")) {
+                guessedCorrectly = true;
+            } else {
+                System.out.println(feedback);
+                attempts++;
+            }
+        }
+
+        if (guessedCorrectly) {
+            System.out.println("Congratulations!! You Cracked the game!!!");
+        } else {
+            System.out.println("Oops...,Hard luck..You'll try again after some time. The correct number is" + generatedNumber + ".");
+        }
+
+        scanner.close();
+    }
+
+    private static int generateRandomNumber() {
+        Random random = new Random();
+        return random.nextInt(UPPER_BOUND - LOWER_BOUND + 1) + LOWER_BOUND;
+    }
+
+    private static String compareGuess(int userGuess, int generatedNumber){
+        if (userGuess == generatedNumber){
+            return "Correct!";
+        } else if (userGuess > generatedNumber){
+            return "The guessed number is Too high.so type Lesser value";
+        } else{
+            return "The guessed number is Too low.so type Higher value";
+        }
+    }
+}
